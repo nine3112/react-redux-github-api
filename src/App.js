@@ -1,232 +1,139 @@
 /*
  src/App.js
 */
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 // import logo from './logo.svg';
-import { github } from './redux/actions/github'
+import {github} from './redux/actions/github'
+import Searchbar from './containers/searchbar/searchbar'
+import Repo from './containers/repo/repo'
 import './App.css';
 class App extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
-  simpleAction = (event) => {
-    console.log("TEST", this.props)
-    const actions = {
-      type:"SEARCH",
-      payload: {
-        SEARCH : "TEST SEARCH"
-      }
+    simpleAction = (event) => {
+        console.log("TEST", this.props)
+        const actions = {
+            type: "SEARCH",
+            payload: {
+                SEARCH: "TEST SEARCH"
+            }
+        }
+        this
+            .props
+            .github(actions);
     }
-    this.props.github(actions);
-   }
- render() {
-  return (
-    <React.Fragment>
-    <section class="hero is-info is-small">
-      <div class="hero-body">
-        <div class="container has-text-centered">
-          <p class="title">
-            Modal Cards
-          </p>
-          <p class="subtitle">
-            Subtitle
-          </p>
-        </div>
-      </div>
-    </section>
-    <div class="box cta">
-      <p class="has-text-centered">
-        <span class="tag is-primary">New</span> Here we have modal cards. When you click on them they will open functional modal examples.
-      </p>
-    </div>
-    <section class="container">
-      <div class="columns features">
-        <div class="column is-4">
-          <div class="card is-shady">
-            <div class="card-image">
-              <figure class="image is-4by3">
-                <img src="https://source.unsplash.com/RWnpyGtY1aU" alt="Placeholder image" class="modal-button" data-target="modal-image2"/>
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="content">
-                <h4>Click on image above</h4>
-                <p>Purus semper eget duis at tellus at urna condimentum mattis. Non blandit massa enim nec. Integer enim neque volutpat ac tincidunt vitae semper quis. Accumsan tortor posuere ac ut consequat semper viverra nam.</p>
-                <span class="button is-link modal-button" data-target="modal-image2">Image modal</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column is-4">
-          <div class="card is-shady">
-            <div class="card-image">
-              <figure class="image is-4by3">
-                <img src="https://source.unsplash.com/6Ticnhs1AG0" alt="Placeholder image"/>
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="content">
-                <h4>Tempor orci dapibus ultrices in.</h4>
-                <p>Ut venenatis tellus in metus vulputate. Amet consectetur adipiscing elit pellentesque. Sed arcu non odio euismod lacinia at quis risus. Faucibus turpis in eu mi bibendum neque egestas cmonsu songue. Phasellus vestibulum lorem
-                sed risus.</p>
-                <span class="button is-link modal-button" data-target="modal-card">Modal Card</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column is-4 modal-button" data-target="modal-image">
-          <div class="card is-shady">
-            <div class="card-image">
-              <figure class="image is-4by3">
-                <img src="https://i.imgsafe.org/ba/baa924a5e3.png" alt="Placeholder image"/>
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="content">
-                <h4>Click anywhere on card</h4>
-                <p>Imperdiet dui accumsan sit amet nulla facilisi morbi. Fusce ut placerat orci nulla pellentesque dignissim enim. Libero id faucibus nisl tincidunt eget nullam. Commodo viverra maecenas accumsan lacus vel facilisis.</p>
-                <span class="button is-link modal-button" data-target="modal-image">Image modal</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="columns features">
-        <div class="column is-4 modal-button" data-target="modal-card">
-          <div class="card is-shady">
-            <div class="card-image">
-              <figure class="image is-4by3">
-                <img src="https://i.imgsafe.org/3f/3f0c578f9d.jpeg" alt="Placeholder image" />
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="content">
-                <h4>Click anywhere on card to <br/>expand into modal card </h4>
-                <p>Purus semper eget duis at tellus at urna condimentum mattis. Non blandit massa enim nec. Integer enim neque volutpat ac tincidunt vitae semper quis. Accumsan tortor posuere ac ut consequat semper viverra nam.</p>
-                <span class="button is-link modal-button">Modal card</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column is-4">
-          <div class="card is-shady">
-            <div class="card-image">
-              <figure class="image is-4by3">
-                <img src="https://source.unsplash.com/hLyd1LukQ7E" alt="butterfly image" class="modal-button" data-target="modal-image4"/>
-              </figure>
-            </div>
-            <div class="card-content  modal-button" data-target="modal-card2">
-              <div class="content">
-                <h4>Click anywhere on card to <br/>expand into modal card - header image expands into bigger image</h4>
-                <p>Purus semper eget duis at tellus at urna condimentum mattis. Non blandit massa enim nec. Integer enim neque volutpat ac tincidunt vitae semper quis.</p>
-                <span class="button is-link modal-button">Modal card</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <footer>
-      <section class="section">
-        <div class="container">
-          <div class="columns is-multiline">
-            <div class="column is-one-third">
-              <article class="notification media has-background-white">
-                <figure class="media-left">
-                  <span class="icon">
-                    <i class="has-text-warning fa fa-columns fa-lg"></i>
+    render() {
+        return (
+            <React.Fragment>
+                <pre>
+       {
+        JSON.stringify(this.props)
+       }
+       </pre>
+                <Searchbar
+                    github={this.props.github}
+                    reload={this.props.redux.github.reload}
+                    show_profile={this.props.redux.github.show_profile}/>
+                <Repo/>
+                <footer>
+                    {/* <section className="section">
+        <div className="container">
+          <div className="columns is-multiline">
+            <div className="column is-one-third">
+              <article className="notification media has-background-white">
+                <figure className="media-left">
+                  <span className="icon">
+                    <i className="has-text-warning fa fa-columns fa-lg"></i>
                   </span>
                 </figure>
-                <div class="media-content">
-                  <div class="content">
-                    <h1 class="title is-size-4">Columns</h1>
-                    <p class="is-size-5 subtitle">
+                <div className="media-content">
+                  <div className="content">
+                    <h1 className="title is-size-4">Columns</h1>
+                    <p className="is-size-5 subtitle">
                       The power of <strong>Flexbox</strong> in a simple interface
                     </p>
                   </div>
                 </div>
               </article>
             </div>
-            <div class="column is-one-third">
-              <article class="notification has-background-white media">
-                <figure class="media-left">
-                  <span class="icon has-text-info">
-                    <i class="fa fa-lg fa-wpforms"></i>
+            <div className="column is-one-third">
+              <article className="notification has-background-white media">
+                <figure className="media-left">
+                  <span className="icon has-text-info">
+                    <i className="fa fa-lg fa-wpforms"></i>
                   </span>
                 </figure>
-                <div class="media-content">
-                  <div class="content">
-                    <h1 class="title is-size-4">Form</h1>
-                    <p class="is-size-5 subtitle">
+                <div className="media-content">
+                  <div className="content">
+                    <h1 className="title is-size-4">Form</h1>
+                    <p className="is-size-5 subtitle">
                       The indispensable <strong>form controls</strong>, designed for maximum clarity
                     </p>
                   </div>
                 </div>
               </article>
             </div>
-            <div class="column is-one-third">
-              <article class="notification has-background-white media">
-                <figure class="media-left">
-                  <span class="icon has-text-danger">
-                    <i class="fa fa-lg fa-cubes"></i>
+            <div className="column is-one-third">
+              <article className="notification has-background-white media">
+                <figure className="media-left">
+                  <span className="icon has-text-danger">
+                    <i className="fa fa-lg fa-cubes"></i>
                   </span>
                 </figure>
-                <div class="media-content">
-                  <div class="content">
-                    <h1 class="title is-size-4">Components</h1>
-                    <p class="is-size-5 subtitle">
+                <div className="media-content">
+                  <div className="content">
+                    <h1 className="title is-size-4">Components</h1>
+                    <p className="is-size-5 subtitle">
                       Advanced multi-part components with lots of possibilities
                     </p>
                   </div>
                 </div>
               </article>
             </div>
-            <div class="column is-one-third">
-              <article class="notification has-background-white media">
-                <figure class="media-left">
-                  <span class="icon has-text-grey">
-                    <i class="fa fa-lg fa-cogs"></i>
+            <div className="column is-one-third">
+              <article className="notification has-background-white media">
+                <figure className="media-left">
+                  <span className="icon has-text-grey">
+                    <i className="fa fa-lg fa-cogs"></i>
                   </span>
                 </figure>
-                <div class="media-content">
-                  <div class="content">
-                    <h1 class="title is-size-4">Modifiers</h1>
-                    <p class="is-size-5 subtitle">
+                <div className="media-content">
+                  <div className="content">
+                    <h1 className="title is-size-4">Modifiers</h1>
+                    <p className="is-size-5 subtitle">
                       An <strong>easy-to-read</strong> naming system designed for humans
                     </p>
                   </div>
                 </div>
               </article>
             </div>
-            <div class="column is-one-third">
-              <article class="notification has-background-white media">
-                <figure class="media-left">
-                  <span class="icon has-text-primary">
-                    <i class="fa fa-lg fa-superpowers"></i>
+            <div className="column is-one-third">
+              <article className="notification has-background-white media">
+                <figure className="media-left">
+                  <span className="icon has-text-primary">
+                    <i className="fa fa-lg fa-superpowers"></i>
                   </span>
                 </figure>
-                <div class="media-content">
-                  <div class="content">
-                    <h1 class="title is-size-4">Layout</h1>
-                    <p class="is-size-5 subtitle">
+                <div className="media-content">
+                  <div className="content">
+                    <h1 className="title is-size-4">Layout</h1>
+                    <p className="is-size-5 subtitle">
                       Design the <strong>structure</strong> of your webpage with these CSS classes
                     </p>
                   </div>
                 </div>
               </article>
             </div>
-            <div class="column is-one-third">
-              <article class="notification has-background-white media">
-                <figure class="media-left">
-                  <span class="icon has-text-danger">
-                    <i class="fa fa-lg fa-cube"></i>
+            <div className="column is-one-third">
+              <article className="notification has-background-white media">
+                <figure className="media-left">
+                  <span className="icon has-text-danger">
+                    <i className="fa fa-lg fa-cube"></i>
                   </span>
                 </figure>
-                <div class="media-content">
-                  <div class="content">
-                    <h1 class="title is-size-4">Elements</h1>
-                    <p class="is-size-5 subtitle">
+                <div className="media-content">
+                  <div className="content">
+                    <h1 className="title is-size-4">Elements</h1>
+                    <p className="is-size-5 subtitle">
                       Essential interface elements that only require a <strong>single CSS class</strong>
                     </p>
                   </div>
@@ -235,140 +142,149 @@ class App extends Component {
             </div>
           </div>
         </div>
-      </section>
-      <div class="content has-text-centered">
-        <div class="control level-item">
-          <a href="https://github.com/dansup/bulma-templates">
-            <div class="tags has-addons">
-              <span class="tag is-dark">Bulma Templates</span>
-              <span class="tag is-info">MIT license</span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </footer>
-    <div id="modal-card" class="modal modal-fx-3dSlit">
-      <div class="modal-background"></div>
-      <div class="modal-content is-tiny">
-        <div class="card">
-          <div class="card-image">
-            <figure class="image is-4by3">
-              <img src="https://source.unsplash.com/6Ticnhs1AG0" alt="Placeholder image"/>
-            </figure>
-          </div>
-          <div class="card-content">
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-48x48">
-                  <img src="http://www.radfaces.com/images/avatars/linda-barret.jpg" alt="linda barret avatar"/>
-                </figure>
-              </div>
-              <div class="media-content">
-                <p class="title is-4">Jane Doe</p>
-                <p class="subtitle is-6">@jane_doe</p>
-              </div>
-            </div>
-            <div class="content">
-              Laum Ipsum junkah potatoes bookin' it. Moosetown rig up I'm tellin' you way up north bookin' it can't get theyah from heeyah native bean suppah whawf Powrtland Museum of Aht, back woods hawsun around the pit mummah Yessah, mummah muckle riyht on'ta her
-              Bean's dinnahbucket bub geez bud sumpin' fierce ayuhpawt Bangah naw, Powrtland Museum of Aht down cellah sumpin' fierce hoppa bub If you can't stand the wintah you don't deserve the summah slower than molasses going uphill in January.
-              Sgn'wahl shoggor hrii uaaah R'lyeh uh'e k'yarnak Hastur hupadgh li'hee, hai f'nilgh'ri nilgh'ri n'ghftor ngftaghu vulgtlagln h'hrii throd Nyarlathotep lloig, naflsll'ha nnnsll'ha athg y-ebunma goka chtenff ehyeog cehye. Zhro y'hah
-              nogoth phlegeth stell'bsna orr'e ph'Hastur gnaiih throd, uln ya lw'nafh mg nar'luh li'hee wgah'n, sgn'wahl mg nakadishtu chlirgh hupadgh tharanak h'gnaiih.
-              <a>@bulmaio</a>.
-              <a href="#">#css</a>
-              <a href="#">#responsive</a>
-              <br/>
-              <time datetime="2018-02-02">12:45 AM - 20 June 2018</time>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-    <div id="modal-card2" class="modal modal-fx-3dSlit">
-      <div class="modal-background"></div>
-      <div class="modal-content is-tiny">
-        <div class="card">
-          <div class="card-image">
-            <figure class="image is-4by3">
-              <img src="https://source.unsplash.com/hLyd1LukQ7E" alt="butterfly"/>
-            </figure>
-          </div>
-          <div class="card-content">
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-48x48">
-                  <img src="http://www.radfaces.com/images/avatars/linda-barret.jpg" alt="linda barret avatar"/>
-                </figure>
-              </div>
-              <div class="media-content">
-                <p class="title is-4">Jane Doe</p>
-                <p class="subtitle is-6">@jane_doe</p>
-              </div>
-            </div>
-            <div class="content">
-              Laum Ipsum junkah potatoes bookin' it. Moosetown rig up I'm tellin' you way up north bookin' it can't get theyah from heeyah native bean suppah whawf Powrtland Museum of Aht, back woods hawsun around the pit mummah Yessah, mummah muckle riyht on'ta her
-              Bean's dinnahbucket bub geez bud sumpin' fierce ayuhpawt Bangah naw, Powrtland Museum of Aht down cellah sumpin' fierce hoppa bub If you can't stand the wintah you don't deserve the summah slower than molasses going uphill in January.
-              Sgn'wahl shoggor hrii uaaah R'lyeh uh'e k'yarnak Hastur hupadgh li'hee, hai f'nilgh'ri nilgh'ri n'ghftor ngftaghu vulgtlagln h'hrii throd Nyarlathotep lloig, naflsll'ha nnnsll'ha athg y-ebunma goka chtenff ehyeog cehye. Zhro y'hah
-              nogoth phlegeth stell'bsna orr'e ph'Hastur gnaiih throd, uln ya lw'nafh mg nar'luh li'hee wgah'n, sgn'wahl mg nakadishtu chlirgh hupadgh tharanak h'gnaiih.
-              <a>@bulmaio</a>.
-              <a href="#">#css</a>
-              <a href="#">#responsive</a>
-              <br/>
-              <time datetime="2018-02-02">12:45 AM - 20 May 2018</time>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-    <div id="modal-image2" class="modal modal-fx-3dSlit">
-      <div class="modal-background"></div>
-      <div class="modal-content is-huge is-image">
-        <img src="https://source.unsplash.com/RWnpyGtY1aU" alt="image"/>
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-    <div id="modal-image4" class="modal modal-fx-3dSlit">
-      <div class="modal-background"></div>
-      <div class="modal-content is-huge is-image">
-        <img src="https://source.unsplash.com/hLyd1LukQ7E" alt="butterfly"/>
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-    <div id="modal-image" class="modal modal-fx-superScaled">
-      <div class="modal-background"></div>
-      <div class="modal-content  is-image">
-        <img src="https://i.imgsafe.org/ba/baa924a5e3.png" alt="Placeholder image"/>
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-    </React.Fragment>
-  //  <div className="App">
-  //   <header className="App-header">
-  //    <img src={logo} className="App-logo" alt="logo" />
-  //    <h1 className="App-title">Welcome to React</h1>
-  //    <pre>
-  //     {
-  //       JSON.stringify(this.props)
-  //     }
-  //     </pre>
-  //   </header>
-  //   <p className="App-intro">
-  //    To get started, edit <code>src/App.js</code> and save to reload
-  //   </p>
-  //   <button onClick={this.simpleAction}>Test redux action</button>
-  //  </div>
-  );
- }
+      </section> */}
+                    <div className="content has-text-centered">
+                        <div className="control level-item">
+                            <a href="https://github.com/dansup/bulma-templates">
+                                <div className="tags has-addons">
+                                    <span className="tag is-dark">Bulma Templates</span>
+                                    <span className="tag is-info">MIT license</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </footer>
+                <div id="modal-card" className="modal modal-fx-3dSlit">
+                    <div className="modal-background"></div>
+                    <div className="modal-content is-tiny">
+                        <div className="card">
+                            <div className="card-image">
+                                <figure className="image is-4by3">
+                                    <img src="https://source.unsplash.com/6Ticnhs1AG0" alt="Placeholder image"/>
+                                </figure>
+                            </div>
+                            <div className="card-content">
+                                <div className="media">
+                                    <div className="media-left">
+                                        <figure className="image is-48x48">
+                                            <img
+                                                src="http://www.radfaces.com/images/avatars/linda-barret.jpg"
+                                                alt="linda barret avatar"/>
+                                        </figure>
+                                    </div>
+                                    <div className="media-content">
+                                        <p className="title is-4">Jane Doe</p>
+                                        <p className="subtitle is-6">@jane_doe</p>
+                                    </div>
+                                </div>
+                                <div className="content">
+                                    Laum Ipsum junkah potatoes bookin' it. Moosetown rig up I'm tellin' you way up
+                                    north bookin' it can't get theyah from heeyah native bean suppah whawf Powrtland
+                                    Museum of Aht, back woods hawsun around the pit mummah Yessah, mummah muckle
+                                    riyht on'ta her Bean's dinnahbucket bub geez bud sumpin' fierce ayuhpawt Bangah
+                                    naw, Powrtland Museum of Aht down cellah sumpin' fierce hoppa bub If you can't
+                                    stand the wintah you don't deserve the summah slower than molasses going uphill
+                                    in January. Sgn'wahl shoggor hrii uaaah R'lyeh uh'e k'yarnak Hastur hupadgh
+                                    li'hee, hai f'nilgh'ri nilgh'ri n'ghftor ngftaghu vulgtlagln h'hrii throd
+                                    Nyarlathotep lloig, naflsll'ha nnnsll'ha athg y-ebunma goka chtenff ehyeog
+                                    cehye. Zhro y'hah nogoth phlegeth stell'bsna orr'e ph'Hastur gnaiih throd, uln
+                                    ya lw'nafh mg nar'luh li'hee wgah'n, sgn'wahl mg nakadishtu chlirgh hupadgh
+                                    tharanak h'gnaiih.
+                                    <a>@bulmaio</a>.
+                                    <a href="#">#css</a>
+                                    <a href="#">#responsive</a>
+                                    <br/>
+                                    <time datetime="2018-02-02">12:45 AM - 20 June 2018</time>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button className="modal-close is-large" aria-label="close"></button>
+                </div>
+                <div id="modal-card2" className="modal modal-fx-3dSlit">
+                    <div className="modal-background"></div>
+                    <div className="modal-content is-tiny">
+                        <div className="card">
+                            <div className="card-image">
+                                <figure className="image is-4by3">
+                                    <img src="https://source.unsplash.com/hLyd1LukQ7E" alt="butterfly"/>
+                                </figure>
+                            </div>
+                            <div className="card-content">
+                                <div className="media">
+                                    <div className="media-left">
+                                        <figure className="image is-48x48">
+                                            <img
+                                                src="http://www.radfaces.com/images/avatars/linda-barret.jpg"
+                                                alt="linda barret avatar"/>
+                                        </figure>
+                                    </div>
+                                    <div className="media-content">
+                                        <p className="title is-4">Jane Doe</p>
+                                        <p className="subtitle is-6">@jane_doe</p>
+                                    </div>
+                                </div>
+                                <div className="content">
+                                    Laum Ipsum junkah potatoes bookin' it. Moosetown rig up I'm tellin' you way up
+                                    north bookin' it can't get theyah from heeyah native bean suppah whawf Powrtland
+                                    Museum of Aht, back woods hawsun around the pit mummah Yessah, mummah muckle
+                                    riyht on'ta her Bean's dinnahbucket bub geez bud sumpin' fierce ayuhpawt Bangah
+                                    naw, Powrtland Museum of Aht down cellah sumpin' fierce hoppa bub If you can't
+                                    stand the wintah you don't deserve the summah slower than molasses going uphill
+                                    in January. Sgn'wahl shoggor hrii uaaah R'lyeh uh'e k'yarnak Hastur hupadgh
+                                    li'hee, hai f'nilgh'ri nilgh'ri n'ghftor ngftaghu vulgtlagln h'hrii throd
+                                    Nyarlathotep lloig, naflsll'ha nnnsll'ha athg y-ebunma goka chtenff ehyeog
+                                    cehye. Zhro y'hah nogoth phlegeth stell'bsna orr'e ph'Hastur gnaiih throd, uln
+                                    ya lw'nafh mg nar'luh li'hee wgah'n, sgn'wahl mg nakadishtu chlirgh hupadgh
+                                    tharanak h'gnaiih.
+                                    <a>@bulmaio</a>.
+                                    <a href="#">#css</a>
+                                    <a href="#">#responsive</a>
+                                    <br/>
+                                    <time datetime="2018-02-02">12:45 AM - 20 May 2018</time>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button className="modal-close is-large" aria-label="close"></button>
+                </div>
+                <div id="modal-image2" className="modal modal-fx-3dSlit">
+                    <div className="modal-background"></div>
+                    <div className="modal-content is-huge is-image">
+                        <img src="https://source.unsplash.com/RWnpyGtY1aU" alt="image"/>
+                    </div>
+                    <button className="modal-close is-large" aria-label="close"></button>
+                </div>
+                <div id="modal-image4" className="modal modal-fx-3dSlit">
+                    <div className="modal-background"></div>
+                    <div className="modal-content is-huge is-image">
+                        <img src="https://source.unsplash.com/hLyd1LukQ7E" alt="butterfly"/>
+                    </div>
+                    <button className="modal-close is-large" aria-label="close"></button>
+                </div>
+                <div id="modal-image" className="modal modal-fx-superScaled">
+                    <div className="modal-background"></div>
+                    <div className="modal-content  is-image">
+                        <img src="https://i.imgsafe.org/ba/baa924a5e3.png" alt="Placeholder image"/>
+                    </div>
+                    <button className="modal-close is-large" aria-label="close"></button>
+                </div>
+            </React.Fragment>
+        //  <div className="App">   <header className="App-header">    <img src={logo}
+        // className="App-logo" alt="logo" />    <h1 className="App-title">Welcome to
+        // React</h1>    <pre>     {       JSON.stringify(this.props)     }     </pre>
+        // </header>   <p className="App-intro">    To get started, edit
+        // <code>src/App.js</code> and save to reload   </p>   <button
+        // onClick={this.simpleAction}>Test redux action</button>  </div>
+        );
+    }
 }
-// const mapStateToProps = github => ({
-//   ...github
-//  })
- function mapStateToProps(state){
-  return state
+// const mapStateToProps = github => ({   ...github  })
+function mapStateToProps(state) {
+    return state
 }
- const mapDispatchToProps = dispatch => ({
-  github: (actions) => dispatch(github(actions))
- })
+const mapDispatchToProps = dispatch => ({
+    github: (actions) => dispatch(github(actions))
+})
 
- export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
