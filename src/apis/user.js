@@ -9,21 +9,15 @@ const UserGithubAPI = {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
-                // body: JSON .stringify({ email: userData.email,    password:
-                // userData.password,   }),
             });
             if (response.status >= 200 && response.status < 300) {
                 return response.json();
-            }
-            else {
+            } else {
                 const error = new Error(response.statusText);
                 error.response = response;
-                // LoginActions.loginError();
                 throw response.statusText;
             }
-        }
-        catch (error_1) {
-            console.log('request failed', error_1);
+        } catch (error_1) {
             return error_1
         }
     },
@@ -35,21 +29,16 @@ const UserGithubAPI = {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
-                // body: JSON .stringify({ email: userData.email,    password:
-                // userData.password,   }),
             });
             if (response.status >= 200 && response.status < 300) {
                 return response.json();
-            }
-            else {
+            } else {
                 const error = new Error(response.statusText);
                 error.response = response;
-                // LoginActions.loginError();
-                throw error;
+                throw response.statusText;
             }
-        }
-        catch (error_1) {
-            console.log('request failed', error_1);
+        } catch (error_1) {
+            return error_1
         }
     }
 };

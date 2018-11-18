@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import UserGithubAPI from '../../apis/user'
-// import imgCenter from './searchbar_style'
-import styled from 'styled-components';
+import {Centerimg} from './searchbar_style'
 import * as Scroll from 'react-scroll';
 let scroll = Scroll.animateScroll;
 
@@ -58,7 +57,6 @@ class Searchbar extends Component {
                 }
             }
             if (json === "Not Found") {
-                console.log("TEST : ", json)
                 actions = {
                     type: "LOADUSER_FAIL",
                     payload: {
@@ -83,7 +81,6 @@ class Searchbar extends Component {
     dispatchRepo = () => {
         const rtn = UserGithubAPI.listRepo(this.props.show_profile.data.login);
         rtn.then(json => {
-            console.log("TEST : ", json)
             let actions;
             if (json && json.length > 0) {
                 actions = {
@@ -117,7 +114,6 @@ class Searchbar extends Component {
         const rtn = beforeString + (this.props.reload)
             ? "is-loading"
             : ""
-        console.log(rtn)
         return rtn
     }
     render() {
@@ -126,11 +122,6 @@ class Searchbar extends Component {
             Reload += ' is-loading';
         }
 
-        const Centerimg = styled.div `
-            margin: auto;
-            padding: 10px;
-        `
-        
         return (
             <React.Fragment>
                 <form onSubmit={this.search}>

@@ -10,7 +10,6 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './assets/css/bulma.min.css';
 class App extends Component {
-    // notify = () => toast("Wow so easy !");
     render() {
         return (
             <React.Fragment>
@@ -28,7 +27,6 @@ class App extends Component {
         );
     }
 }
-// const mapStateToProps = github => ({   ...github  })
 function mapStateToProps(state) {
     return state
 }

@@ -23,8 +23,11 @@ class Repo extends Component {
                                                     </figure>
                                                     <div className="media-content">
                                                         <div className="content">
-                                                            <h1  className="title is-size-4"><a href={data.html_url}>{data.name}</a>
-                                                                <span className="tag is-warning"> <Moment format="YYYY/MM/DD">{data.updated_at}</Moment></span>
+                                                            <h1 className="title is-size-4">
+                                                                <a href={data.html_url}>{data.name}</a>
+                                                                <span className="tag is-warning">
+                                                                    <Moment format="YYYY/MM/DD">{data.updated_at}</Moment>
+                                                                </span>
                                                             </h1>
                                                             <div className="is-size-5 subtitle">
                                                                 {data.description}
@@ -54,7 +57,6 @@ class Repo extends Component {
                     </div>
                 </React.Fragment>
 }
-                {/* </footer> */}
             </React.Fragment>
         )
     }

@@ -1,7 +1,3 @@
-/*
- src/reducers/simpleReducer.js
-*/
-// import UserGithubAPI from '../../apis/user'
 import {toast} from 'react-toastify';
 
 const initialState = {
