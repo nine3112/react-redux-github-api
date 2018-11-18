@@ -87,6 +87,8 @@ export default(state = initialState, action) => {
                 }
             }
             return state;
+            toast.warn("Not Found Repository", {position: toast.POSITION.TOP_RIGHT});
+
         default:
             return state
     }
