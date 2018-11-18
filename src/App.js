@@ -8,7 +8,7 @@ import Searchbar from './containers/searchbar/searchbar'
 import Repo from './containers/repo/repo'
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './App.css';
+import './assets/css/bulma.min.css';
 class App extends Component {
     // notify = () => toast("Wow so easy !");
     render() {
