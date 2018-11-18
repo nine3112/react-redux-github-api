@@ -1,7 +1,7 @@
 /*
  src/reducers/simpleReducer.js
 */
-import UserGithubAPI from '../../apis/user'
+// import UserGithubAPI from '../../apis/user'
 const initialState = {
     search: "",
     reload: false,
@@ -11,7 +11,12 @@ const initialState = {
             name_github: ""
         }
     },
-    show_repo: false
+    show_repo: {
+        show: false,
+        data: {
+            name_github: ""
+        }
+    },
 };
 export default(state = initialState, action) => {
     switch (action.type) {
@@ -34,6 +39,7 @@ export default(state = initialState, action) => {
             }
             // UserGithubAPI.searchUser(action.payload.SEARCH);
             return state;
+
         case 'LOADUSER_SUCCESS':
             state = {
                 ...state,
@@ -41,6 +47,26 @@ export default(state = initialState, action) => {
                 show_profile: {
                     show: true,
                     data: action.payload.show_profile.data
+                }
+            }
+            return state;
+        case 'LOADUSER_FAIL':
+            state = {
+                ...state,
+                reload: false,
+                show_profile: {
+                    show: false,
+                    data: {}
+                }
+            }
+            return state;
+        case 'LOADREPO_SUCCESS':
+            state = {
+                ...state,
+                reload: false,
+                show_repo: {
+                    show: true,
+                    data: action.payload.show_repo.data
                 }
             }
             return state;

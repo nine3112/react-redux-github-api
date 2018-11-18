@@ -6,8 +6,7 @@ class Searchbar extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            text_search: '',
-            loading: ''
+            text_search: ''
         }
     }
     setsearch = (event) => {
@@ -45,11 +44,45 @@ class Searchbar extends Component {
     dispatchShowProfile = () => {
         const rtn = UserGithubAPI.searchUser(this.state.text_search);
         rtn.then(json => {
-            console.log("TEST : ", json)
+
             let actions = {
                 type: "LOADUSER_SUCCESS",
                 payload: {
                     show_profile: {
+                        show: true,
+                        data: json
+                    }
+                }
+            }
+            if (json == "Not Found"){
+                console.log("TEST : ", json)
+                actions = {
+                    type: "LOADUSER_FAIL",
+                    payload: {
+                        show_profile: {
+                            show: false,
+                            data: {}
+                        }
+                    }
+                }
+            }
+            this
+                .props
+                .github(actions);
+        })
+    }
+    listRepo = () => {
+        this.dispatchReload()
+        this.dispatchRepo()
+    }
+    dispatchRepo = () => {
+        const rtn = UserGithubAPI.listRepo(this.props.show_profile.data.login);
+        rtn.then(json => {
+            console.log("TEST : ", json)
+            let actions = {
+                type: "LOADREPO_SUCCESS",
+                payload: {
+                    show_repo: {
                         show: true,
                         data: json
                     }
@@ -78,10 +111,10 @@ class Searchbar extends Component {
                     <section className="hero is-info is-small">
                         <div className="hero-body">
                             <div className="container has-text-centered">
-                                <p className="title">
+                                <div className="title">
                                     Github Search
-                                </p>
-                                <p className="subtitle">
+                                </div>
+                                <div className="subtitle">
                                     <div className="columns is-mobile is-centered">
                                         <div className="column is-4 ">
                                             <div className={"control" + Reload}>
@@ -94,42 +127,51 @@ class Searchbar extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                </p>
-                                <p className="subtitle">
-                                    <button className="button is-danger" type="submit">Search</button>
-                                </p>
+                                </div>
+                                <div className="subtitle">
+                                    <button className={"button is-danger" + Reload} type="submit">Search</button>
+                                </div>
                             </div>
                         </div>
                     </section>
                     <div className="box cta">
-                        {(this.props.show_profile.show)
-                            ? <div className="columns is-mobile is-centered">
-                                    <div className="column is-5">
-                                        <p className="has-text-centered">
-                                            <div className="card is-shady">
-                                                <div className="card-image">
-                                                    <figure className="image img-center">
-                                                        <img
-                                                            src={this.props.show_profile.data.avatar_url}
-                                                            alt="Placeholder image"
-                                                            className="image"
-                                                            data-target="modal-image2"/>
-                                                    </figure>
-                                                </div>
-                                                <div className="card-content">
-                                                    <div className="content">
-                                                        <h4>{this.props.show_profile.data.name} ({this.props.show_profile.data.login})</h4>
-                                                        <p></p>
-                                                        <span className="button is-link modal-button" data-target="modal-image2">ดูรายละเอียด</span>
-                                                    </div>
-                                                </div>
+                        {this.props.show_profile.show && <div className="columns is-mobile is-centered">
+                            <div className="column is-5">
+                                <div className="has-text-centered">
+                                    <div className="card is-shady">
+                                        <div className="card-image">
+                                            <div className="image img-center">
+                                                <img
+                                                    src={this.props.show_profile.data.avatar_url}
+                                                    alt="Profile"
+                                                    className="image"
+                                                    data-target="modal-image2"/>
                                             </div>
-                                        </p>
+                                        </div>
+                                        <div className="card-content">
+                                            <div className="content">
+                                                <h4>{this.props.show_profile.data.name}
+                                                    ({this.props.show_profile.data.login})</h4>
+                                                <p></p>
+                                                <span
+                                                    onClick={this.listRepo}
+                                                    className={"button is-link modal-button " + Reload}
+                                                    data-target="modal-image2">ดูรายละเอียด</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            : ""}
+                            </div>
+                        </div>
+}
                     </div>
                 </form>
+                <div class="notification is-danger">
+  <button class="delete"></button>
+  Primar lorem ipsum dolor sit amet, consectetur
+  adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Sit amet,
+  consectetur adipiscing elit
+</div>
             </React.Fragment>
         )
     }
