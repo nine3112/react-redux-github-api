@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-import './searchbar.scss';
 import UserGithubAPI from '../../apis/user'
+// import imgCenter from './searchbar_style'
+import styled from 'styled-components';
+import * as Scroll from 'react-scroll';
+let scroll = Scroll.animateScroll;
 
 class Searchbar extends Component {
     constructor(props) {
@@ -54,7 +57,7 @@ class Searchbar extends Component {
                     }
                 }
             }
-            if (json == "Not Found"){
+            if (json === "Not Found") {
                 console.log("TEST : ", json)
                 actions = {
                     type: "LOADUSER_FAIL",
@@ -69,6 +72,8 @@ class Searchbar extends Component {
             this
                 .props
                 .github(actions);
+            scroll.scrollToBottom();
+
         })
     }
     listRepo = () => {
@@ -79,18 +84,33 @@ class Searchbar extends Component {
         const rtn = UserGithubAPI.listRepo(this.props.show_profile.data.login);
         rtn.then(json => {
             console.log("TEST : ", json)
-            let actions = {
-                type: "LOADREPO_SUCCESS",
-                payload: {
-                    show_repo: {
-                        show: true,
-                        data: json
+            let actions;
+            if (json && json.length > 0) {
+                actions = {
+                    type: "LOADREPO_SUCCESS",
+                    payload: {
+                        show_repo: {
+                            show: true,
+                            data: json
+                        }
+                    }
+                }
+            } else {
+                actions = {
+                    type: "LOADREPO_FAIL",
+                    payload: {
+                        show_repo: {
+                            show: false,
+                            data: []
+                        }
                     }
                 }
             }
             this
                 .props
                 .github(actions);
+            scroll.scrollTo(1000);
+
         })
     }
     Reload = (beforeString) => {
@@ -105,6 +125,12 @@ class Searchbar extends Component {
         if (this.props.reload) {
             Reload += ' is-loading';
         }
+
+        const Centerimg = styled.div `
+            margin: auto;
+            padding: 10px;
+        `
+        
         return (
             <React.Fragment>
                 <form onSubmit={this.search}>
@@ -112,7 +138,7 @@ class Searchbar extends Component {
                         <div className="hero-body">
                             <div className="container has-text-centered">
                                 <div className="title">
-                                    Github Search
+                                    Github search
                                 </div>
                                 <div className="subtitle">
                                     <div className="columns is-mobile is-centered">
@@ -123,13 +149,17 @@ class Searchbar extends Component {
                                                     onChange={this.setsearch}
                                                     className="input is-rounded"
                                                     type="text"
-                                                    placeholder="Text input"/>
+                                                    placeholder="User Github"
+                                                    disabled={this.props.reload}/>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="subtitle">
-                                    <button className={"button is-danger" + Reload} type="submit">Search</button>
+                                    <button
+                                        className={"button is-danger" + Reload}
+                                        type="submit"
+                                        disabled={this.props.reload}>Search</button>
                                 </div>
                             </div>
                         </div>
@@ -140,23 +170,33 @@ class Searchbar extends Component {
                                 <div className="has-text-centered">
                                     <div className="card is-shady">
                                         <div className="card-image">
-                                            <div className="image img-center">
-                                                <img
-                                                    src={this.props.show_profile.data.avatar_url}
-                                                    alt="Profile"
-                                                    className="image"
-                                                    data-target="modal-image2"/>
-                                            </div>
+                                            <Centerimg>
+                                                <div className="image ">
+                                                    <img
+                                                        src={this.props.show_profile.data.avatar_url}
+                                                        alt="Profile"
+                                                        className="image"
+                                                        data-target="modal-image2"/>
+                                                </div>
+                                            </Centerimg>
                                         </div>
                                         <div className="card-content">
                                             <div className="content">
-                                                <h4>{this.props.show_profile.data.name}
-                                                    ({this.props.show_profile.data.login})</h4>
-                                                <p></p>
+                                                <h4>
+                                                    <a href={this.props.show_profile.data.html_url}>{this.props.show_profile.data.name}
+                                                        ({this.props.show_profile.data.login})
+                                                    </a>
+                                                </h4>
+                                                <p>
+                                                    <a href={this.props.show_profile.data.html_url}>
+                                                        {this.props.show_profile.data.html_url}
+                                                    </a>
+                                                </p>
+                                                <p>Repository amount : {this.props.show_profile.data.public_repos}</p>
                                                 <span
                                                     onClick={this.listRepo}
                                                     className={"button is-link modal-button " + Reload}
-                                                    data-target="modal-image2">ดูรายละเอียด</span>
+                                                    disabled={this.props.reload}>See Repository</span>
                                             </div>
                                         </div>
                                     </div>
@@ -166,12 +206,6 @@ class Searchbar extends Component {
 }
                     </div>
                 </form>
-                <div class="notification is-danger">
-  <button class="delete"></button>
-  Primar lorem ipsum dolor sit amet, consectetur
-  adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Sit amet,
-  consectetur adipiscing elit
-</div>
             </React.Fragment>
         )
     }

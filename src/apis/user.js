@@ -1,4 +1,5 @@
 const _http = 'https://api.github.com/';
+
 const UserGithubAPI = {
     async searchUser(usergithub) {
         try {

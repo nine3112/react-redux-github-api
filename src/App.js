@@ -6,24 +6,16 @@ import {connect} from 'react-redux';
 import {github} from './redux/actions/github'
 import Searchbar from './containers/searchbar/searchbar'
 import Repo from './containers/repo/repo'
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 class App extends Component {
-    simpleAction = (event) => {
-        console.log("TEST", this.props)
-        const actions = {
-            type: "SEARCH",
-            payload: {
-                SEARCH: "TEST SEARCH"
-            }
-        }
-        this
-            .props
-            .github(actions);
-    }
+    // notify = () => toast("Wow so easy !");
     render() {
         return (
             <React.Fragment>
                 <div>
+                    <ToastContainer/>
                     <Searchbar
                         github={this.props.github}
                         reload={this.props.redux.github.reload}

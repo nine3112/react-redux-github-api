@@ -2,21 +2,19 @@
  src/reducers/simpleReducer.js
 */
 // import UserGithubAPI from '../../apis/user'
+import {toast} from 'react-toastify';
+
 const initialState = {
     search: "",
     reload: false,
     show_profile: {
         show: false,
-        data: {
-            name_github: ""
-        }
+        data: {}
     },
     show_repo: {
         show: false,
-        data: {
-            name_github: ""
-        }
-    },
+        data: []
+    }
 };
 export default(state = initialState, action) => {
     switch (action.type) {
@@ -37,7 +35,6 @@ export default(state = initialState, action) => {
                 search: action.payload.SEARCH,
                 reload: true
             }
-            // UserGithubAPI.searchUser(action.payload.SEARCH);
             return state;
 
         case 'LOADUSER_SUCCESS':
@@ -47,6 +44,10 @@ export default(state = initialState, action) => {
                 show_profile: {
                     show: true,
                     data: action.payload.show_profile.data
+                },
+                show_repo: {
+                    show: false,
+                    data: {}
                 }
             }
             return state;
@@ -57,8 +58,14 @@ export default(state = initialState, action) => {
                 show_profile: {
                     show: false,
                     data: {}
+                },
+                show_repo: {
+                    show: false,
+                    data: []
                 }
             }
+            toast.error("Not Found Github", {position: toast.POSITION.TOP_RIGHT});
+
             return state;
         case 'LOADREPO_SUCCESS':
             state = {
@@ -67,6 +74,16 @@ export default(state = initialState, action) => {
                 show_repo: {
                     show: true,
                     data: action.payload.show_repo.data
+                }
+            }
+            return state;
+        case 'LOADREPO_FAIL':
+            state = {
+                ...state,
+                reload: false,
+                show_repo: {
+                    show: false,
+                    data: []
                 }
             }
             return state;
