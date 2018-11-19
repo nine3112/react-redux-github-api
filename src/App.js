@@ -1,6 +1,3 @@
-/*
- src/App.js
-*/
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {github} from './redux/actions/github'
@@ -9,6 +6,7 @@ import Repo from './containers/repo/repo'
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './assets/css/bulma.min.css';
+
 class App extends Component {
     render() {
         return (
@@ -21,12 +19,17 @@ class App extends Component {
                         show_profile={this.props.redux.github.show_profile}/>
                 </div>
                 <div>
-                    <Repo reload={this.props.redux.github.reload} github={this.props.github} show_repo={this.props.redux.github.show_repo} show_profile={this.props.redux.github.show_profile}/>
+                    <Repo
+                        reload={this.props.redux.github.reload}
+                        github={this.props.github}
+                        show_repo={this.props.redux.github.show_repo}
+                        show_profile={this.props.redux.github.show_profile}/>
                 </div>
             </React.Fragment>
         );
     }
 }
+
 function mapStateToProps(state) {
     return state
 }

@@ -18,12 +18,13 @@ const UserGithubAPI = {
                 throw response.statusText;
             }
         } catch (error_1) {
-            return error_1
+            return {error_bool: true, error_code : error_1}
         }
     },
-    async listRepo(usergithub, page= "1") {
+
+    async listRepo(usergithub, page = "1") {
         try {
-            const response = await fetch(_http + 'users/' + usergithub + '/repos?page='+ page, {
+            const response = await fetch(_http + 'users/' + usergithub + '/repos?page=' + page, {
                 method: 'get',
                 headers: {
                     'Accept': 'application/json',
@@ -38,7 +39,7 @@ const UserGithubAPI = {
                 throw response.statusText;
             }
         } catch (error_1) {
-            return error_1
+            return {error_bool: true, error_code : error_1}
         }
     }
 };

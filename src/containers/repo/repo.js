@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import Moment from 'react-moment';
 import UserGithubAPI from '../../apis/user'
 import * as Scroll from 'react-scroll';
+import * as dis from '../../redux/actions/github'
+
 let scroll = Scroll.animateScroll;
+
 class Repo extends Component {
 
     loadMoreRepo = () => {
@@ -13,47 +16,24 @@ class Repo extends Component {
             if (json && json.length > 0) {
                 let temp = [...this.props.show_repo.data]
                 temp = temp.concat(json)
-                console.log("RESULT : ", temp)
-                actions = {
-                    type: "LOADREPO_MORE_SUCCESS",
-                    payload: {
-                        show_repo: {
-                            show: true,
-                            data: temp,
-                            page: this.props.show_repo.page + 1
-                        }
-                    }
-                }
+                actions = dis.loadRepoMoreSuccess(temp, this.props.show_repo.page)
             } else {
-                actions = {
-                    type: "LOADREPO_FAIL",
-                    payload: {
-                        show_repo: {
-                            show: false,
-                            data: [],
-                            page: 1
-                        }
-                    }
-                }
+                actions = dis.loadRepoFail()
             }
             this
                 .props
                 .github(actions);
             scroll.scrollMore(500);
-
         })
     }
+
     dispatchReload = () => {
-        let actions = {
-            type: "RELOAD",
-            payload: {
-                reload: true
-            }
-        }
+        let actions = dis.Reload(true)
         this
             .props
             .github(actions);
     }
+
     render() {
         let Reload = '';
         if (this.props.reload) {
@@ -74,9 +54,7 @@ class Repo extends Component {
                                             <div className="box">
                                                 <article className="notification media has-background-white">
                                                     <figure className="media-left">
-                                                        <span className="icon">
-                                                            {/* <i className="has-text-warning fa fa-columns fa-lg"></i> */}
-                                                        </span>
+                                                        <span className="icon"></span>
                                                     </figure>
                                                     <div className="media-content">
                                                         <div className="content">

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import UserGithubAPI from '../../apis/user'
 import {Centerimg} from './searchbar_style'
 import * as Scroll from 'react-scroll';
+import * as dis from '../../redux/actions/github'
 let scroll = Scroll.animateScroll;
 
 class Searchbar extends Component {
@@ -19,57 +20,30 @@ class Searchbar extends Component {
         e.preventDefault();
     }
     dispatchSearch = () => {
-        let actions = {
-            type: "LOADUSER",
-            payload: {
-                SEARCH: this.state.text_search
-            }
-        }
         this
             .props
-            .github(actions);
+            .github(dis.loadUser(this.state.text_search));
         this.dispatchReload();
         this.dispatchShowProfile();
     }
     dispatchReload = () => {
-        let actions = {
-            type: "RELOAD",
-            payload: {
-                reload: true
-            }
-        }
         this
             .props
-            .github(actions);
+            .github(dis.Reload(true));
     }
     dispatchShowProfile = () => {
         const rtn = UserGithubAPI.searchUser(this.state.text_search);
         rtn.then(json => {
-            let actions = {
-                type: "LOADUSER_SUCCESS",
-                payload: {
-                    show_profile: {
-                        show: true,
-                        data: json
-                    }
-                }
+            if (json && json.error_bool) {
+                this
+                    .props
+                    .github(dis.loadUserFail());
+            } else {
+                this
+                    .props
+                    .github(dis.loadUserSuccess(json));
             }
-            if (json === "Not Found") {
-                actions = {
-                    type: "LOADUSER_FAIL",
-                    payload: {
-                        show_profile: {
-                            show: false,
-                            data: {}
-                        }
-                    }
-                }
-            }
-            this
-                .props
-                .github(actions);
             scroll.scrollToBottom();
-
         })
     }
     listRepo = () => {
@@ -79,36 +53,17 @@ class Searchbar extends Component {
     dispatchRepo = () => {
         const rtn = UserGithubAPI.listRepo(this.props.show_profile.data.login, "1");
         rtn.then(json => {
-            let actions;
             if (json && json.length > 0) {
-                actions = {
-                    type: "LOADREPO_SUCCESS",
-                    payload: {
-                        show_repo: {
-                            show: true,
-                            data: json,
-                            page: 1
-                        }
-                    }
-                }
+                this
+                    .props
+                    .github(dis.loadRepoSuccess(json));
             } else {
-                actions = {
-                    type: "LOADREPO_FAIL",
-                    payload: {
-                        show_repo: {
-                            show: false,
-                            data: [],
-                            page: 1
-                        }
-                    }
-                }
+                this
+                    .props
+                    .github(dis.loadRepoFail());
             }
-            this
-                .props
-                .github(actions);
             scroll.scrollTo(1000);
-
-        })
+        });
     }
     Reload = (beforeString) => {
         const rtn = beforeString + (this.props.reload)
@@ -121,7 +76,6 @@ class Searchbar extends Component {
         if (this.props.reload) {
             Reload += ' is-loading';
         }
-
         return (
             <React.Fragment>
                 <form onSubmit={this.search}>
