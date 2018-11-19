@@ -41,12 +41,10 @@ class Searchbar extends Component {
         this
             .props
             .github(actions);
-
     }
     dispatchShowProfile = () => {
         const rtn = UserGithubAPI.searchUser(this.state.text_search);
         rtn.then(json => {
-
             let actions = {
                 type: "LOADUSER_SUCCESS",
                 payload: {
@@ -79,7 +77,7 @@ class Searchbar extends Component {
         this.dispatchRepo()
     }
     dispatchRepo = () => {
-        const rtn = UserGithubAPI.listRepo(this.props.show_profile.data.login);
+        const rtn = UserGithubAPI.listRepo(this.props.show_profile.data.login, "1");
         rtn.then(json => {
             let actions;
             if (json && json.length > 0) {
@@ -88,7 +86,8 @@ class Searchbar extends Component {
                     payload: {
                         show_repo: {
                             show: true,
-                            data: json
+                            data: json,
+                            page: 1
                         }
                     }
                 }
@@ -98,7 +97,8 @@ class Searchbar extends Component {
                     payload: {
                         show_repo: {
                             show: false,
-                            data: []
+                            data: [],
+                            page: 1
                         }
                     }
                 }

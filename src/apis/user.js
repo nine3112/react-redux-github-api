@@ -21,9 +21,9 @@ const UserGithubAPI = {
             return error_1
         }
     },
-    async listRepo(usergithub) {
+    async listRepo(usergithub, page= "1") {
         try {
-            const response = await fetch(_http + 'users/' + usergithub + '/repos', {
+            const response = await fetch(_http + 'users/' + usergithub + '/repos?page='+ page, {
                 method: 'get',
                 headers: {
                     'Accept': 'application/json',

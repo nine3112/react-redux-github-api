@@ -43,7 +43,8 @@ export default(state = initialState, action) => {
                 },
                 show_repo: {
                     show: false,
-                    data: {}
+                    data: {},
+                    page: 1
                 }
             }
             return state;
@@ -57,19 +58,32 @@ export default(state = initialState, action) => {
                 },
                 show_repo: {
                     show: false,
-                    data: []
+                    data: [],
+                    page: 1
                 }
             }
             toast.error("Not Found Github", {position: toast.POSITION.TOP_RIGHT});
 
             return state;
-        case 'LOADREPO_SUCCESS':
+            case 'LOADREPO_SUCCESS':
             state = {
                 ...state,
                 reload: false,
                 show_repo: {
                     show: true,
-                    data: action.payload.show_repo.data
+                    data: action.payload.show_repo.data,
+                    page: action.payload.show_repo.page
+                }
+            }
+            return state;
+            case 'LOADREPO_MORE_SUCCESS':
+            state = {
+                ...state,
+                reload: false,
+                show_repo: {
+                    show: true,
+                    data: action.payload.show_repo.data,
+                    page: action.payload.show_repo.page
                 }
             }
             return state;
@@ -79,12 +93,12 @@ export default(state = initialState, action) => {
                 reload: false,
                 show_repo: {
                     show: false,
-                    data: []
+                    data: [],
+                    page: 1
                 }
             }
-            return state;
             toast.warn("Not Found Repository", {position: toast.POSITION.TOP_RIGHT});
-
+            return state;
         default:
             return state
     }

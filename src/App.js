@@ -21,7 +21,7 @@ class App extends Component {
                         show_profile={this.props.redux.github.show_profile}/>
                 </div>
                 <div>
-                    <Repo show_repo={this.props.redux.github.show_repo}/>
+                    <Repo reload={this.props.redux.github.reload} github={this.props.github} show_repo={this.props.redux.github.show_repo} show_profile={this.props.redux.github.show_profile}/>
                 </div>
             </React.Fragment>
         );
